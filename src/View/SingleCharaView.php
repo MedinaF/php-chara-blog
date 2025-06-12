@@ -18,6 +18,7 @@ class SingleCharaView extends BaseView
         <h1><?= $this->chara->getFirstname() ?></h1>
         <p>Lastname: <?= $this->chara->getLastname() ?></p>
         <p>Age : <?= $this->chara->getAge() ?></p>
+        <p>Picture : <?= $this->chara->getPicture() ?></p>
         <form method="post">
             <button>Delete</button>
         </form>

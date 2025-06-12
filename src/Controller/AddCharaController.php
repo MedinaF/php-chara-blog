@@ -14,9 +14,9 @@ class AddCharaController extends BaseController {
     }
 
     protected function doPost(): \App\Core\BaseView {
-        if(!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['age'])) {
+        if(!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['age']) && !empty($_POST['picture'])) {
             $repo = new CharaRepository();
-            $chara = new Chara($_POST['firstname'], $_POST['lastname'], $_POST['age']);
+            $chara = new Chara($_POST['firstname'], $_POST['lastname'], $_POST['age'], $_POST['picture'], $_GET["anime"]);
 
             $repo->persist($chara);
             return new RedirectView("/chara?id=".$chara->getId());

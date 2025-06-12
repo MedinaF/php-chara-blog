@@ -8,18 +8,25 @@ class Chara {
     private string $firstname;
     private string $lastname;
     private int $age;
+    private ?string $picture;
+    private Anime $anime;
 
     public function __construct(
         string $firstname,
         string $lastname, 
         int $age, 
+        ?string $picture=null,
+         Anime $anime,
         ?int $id =null
     ) {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->age = $age;
+        $this->picture = $picture;
+        $this->anime = $anime;        
         $this->id = $id;
     }
+
 
     /**
      * Get the value of id
@@ -40,7 +47,7 @@ class Chara {
     }
 
     /**
-     * Get the value of name
+     * Get the value of firstname
      */
     public function getFirstname(): string
     {
@@ -48,7 +55,7 @@ class Chara {
     }
 
     /**
-     * Set the value of name
+     * Set the value of firstname
      */
     public function setFirstname(string $firstname): self
     {
@@ -60,7 +67,7 @@ class Chara {
     /**
      * Get the value of lastname
      */
-    public function getlastname(): string
+    public function getLastname(): string
     {
         return $this->lastname;
     }
@@ -68,7 +75,7 @@ class Chara {
     /**
      * Set the value of lastname
      */
-    public function setlastname(string $lastname): self
+    public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
 
@@ -89,6 +96,42 @@ class Chara {
     public function setAge(int $age): self
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of picture
+     */
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    /**
+     * Set the value of picture
+     */
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of anime
+     */
+    public function getAnime(): Anime
+    {
+        return $this->anime;
+    }
+
+    /**
+     * Set the value of anime
+     */
+    public function setAnime(Anime $anime): self
+    {
+        $this->anime = $anime;
 
         return $this;
     }

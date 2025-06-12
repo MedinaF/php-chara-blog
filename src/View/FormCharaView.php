@@ -25,6 +25,9 @@ class FormCharaView extends BaseView {
             <label>age
                 <input type="number" name="age" value="<?= $this->chara?->getAge() ?>">
             </label>
+            <label>picture
+                <input type="number" name="picture" value="<?= $this->chara?->getPicture() ?>">
+            </label></button>
             
             <button><?= $this->chara ? "Update":"Add" ?></button>
         </form>

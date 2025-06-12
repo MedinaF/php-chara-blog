@@ -25,10 +25,10 @@ class UpdateCharaController extends BaseController {
 
     public function doPost(): \App\Core\BaseView {
         $repo = new CharaRepository();
-        if(empty($_POST["name"]) || empty($_POST["breed"]) || empty($_POST["age"])) {
-            return new FormCharaView(error: "Name, breed and age are required", chara: $repo->findById($_GET["id"]));
+        if(empty($_POST["firstname"]) || empty($_POST["lastname"]) || empty($_POST["age"])) {
+            return new FormCharaView(error: "Name, lastname and age are required", chara: $repo->findById($_GET["id"]));
         }
-        $chara = new Chara($_POST["name"], $_POST["breed"], $_POST["age"], $_GET["id"]);
+        $chara = new Chara($_POST["firstname"], $_POST["lastname"], $_POST["age"], $_GET["id"], $_GET["anime"]);
         $repo->update($chara);
         return new RedirectView("/chara?id=".$chara->getId());
     }

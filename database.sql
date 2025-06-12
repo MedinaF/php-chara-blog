@@ -8,7 +8,8 @@ CREATE TABLE anime (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(90) NOT NULL,
     genre VARCHAR(50),
-    release DATE
+    release DATE,
+    image VARCHAR(150)
 );
 
 -- Table des personnages
@@ -17,6 +18,7 @@ CREATE TABLE chara (
     firstname VARCHAR(70) NOT NULL,
     lastname VARCHAR(70),
     age INT,
+    picture VARCHAR(150)
     anime_id INT NOT NULL,
     FOREIGN KEY (anime_id) REFERENCES anime(id)
 );

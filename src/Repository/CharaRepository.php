@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Repository;
 
@@ -28,6 +28,8 @@ class CharaRepository
                 $line["firstname"],
                 $line["lastname"],
                 $line["age"],
+                $line["picture"],
+                $anime,
                 $line["id"]
             );
             //Il serait préférable d'appeler une méthode qui fait l'instance pour éviter les répétitions dans les find
@@ -75,6 +77,8 @@ class CharaRepository
                 $line["firstname"],
                 $line["lastname"],
                 $line["age"],
+                $line["picture"],
+                $line["anime"],
                 $line["id"]
             );
 
@@ -96,11 +100,13 @@ class CharaRepository
     {
         $connection = Database::connect();
         
-        $preparedQuery = $connection->prepare("INSERT INTO chara (firstname,lastname,age) VALUES (:firstname,:lastname,:age)");
+        $preparedQuery = $connection->prepare("INSERT INTO chara (firstname,lastname,age,picture,anime) VALUES (:firstname,:lastname,:age,:picture,:anime)");
         
         $preparedQuery->bindValue(":firstname", $chara->getFirstname());
         $preparedQuery->bindValue(":lastname", $chara->getLastname());
         $preparedQuery->bindValue(":age", $chara->getAge());
+        $preparedQuery->bindValue(":picture", $chara->getPicture());
+        $preparedQuery->bindValue(":anime", $chara->getAnime());
         
         $preparedQuery->execute();
 
@@ -136,11 +142,15 @@ class CharaRepository
      */
     public function update(Chara $chara): bool {
         $connection = Database::connect();
-        $preparedQuery = $connection->prepare("UPDATE chara SET firstname=:firstname, lastname=:lastname, age=:age WHERE id=:id");
+        $preparedQuery = $connection->prepare("UPDATE chara SET firstname=:firstname, lastname=:lastname, age=:age, picture=:picture, anime=:anime WHERE id=:id");
         $preparedQuery->bindValue(":firstname", $chara->getFirstname());
         $preparedQuery->bindValue(":lastname", $chara->getLastname());
         $preparedQuery->bindValue(":age", $chara->getAge());
+        $preparedQuery->bindValue(":picture", $chara->getPicture());
+        $preparedQuery->bindValue(":anime", $chara->getAnime());
         $preparedQuery->bindValue(":id", $chara->getId());
+                
+
 
         $preparedQuery->execute();
 
@@ -157,8 +167,12 @@ class CharaRepository
                 $line["firstname"],
                 $line["lastname"],
                 $line["age"],
+                $line["picture"],
+                $line["anime"],
                 $line["id"]
             );
 }
 
 }
+
+
