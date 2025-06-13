@@ -4,46 +4,27 @@
 namespace App\Entity;
 
 class Chara {
-    private ?int $id;
     private string $firstname;
     private string $lastname;
     private int $age;
-    private ?string $picture;
     private Anime $anime;
+    private ?string $picture;
+    private ?int $id;
 
-        public function __construct(
+    public function __construct(
         string $firstname,
         string $lastname, 
         int $age, 
-        ?string $picture = null,
         Anime $anime,
+        ?string $picture = null,
         ?int $id = null
     ) {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->age = $age;
+        $this->anime = $anime;
         $this->picture = $picture;
-        $this->anime = $anime;        
         $this->id = $id;
-    }
-
-
-    /**
-     * Get the value of id
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     */
-    public function setId(?int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -101,6 +82,24 @@ class Chara {
     }
 
     /**
+     * Get the value of anime
+     */
+    public function getAnime(): Anime
+    {
+        return $this->anime;
+    }
+
+    /**
+     * Set the value of anime
+     */
+    public function setAnime(Anime $anime): self
+    {
+        $this->anime = $anime;
+
+        return $this;
+    }
+
+    /**
      * Get the value of picture
      */
     public function getPicture(): ?string
@@ -119,19 +118,19 @@ class Chara {
     }
 
     /**
-     * Get the value of anime
+     * Get the value of id
      */
-    public function getAnime(): Anime
+    public function getId(): ?int
     {
-        return $this->anime;
+        return $this->id;
     }
 
     /**
-     * Set the value of anime
+     * Set the value of id
      */
-    public function setAnime(Anime $anime): self
+    public function setId(?int $id): self
     {
-        $this->anime = $anime;
+        $this->id = $id;
 
         return $this;
     }

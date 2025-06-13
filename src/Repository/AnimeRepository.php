@@ -21,14 +21,17 @@ class AnimeRepository
         $preparedQuery = $connection->prepare("SELECT * FROM anime");
         $preparedQuery->execute();
 
-        //foreach($preparedQuery->fetchAll() as $line) {
         while ($line = $preparedQuery->fetch()) {
-            $anime = new anime(
-                $line["name"],
-                $line["genre"],
-                $line["release"],
-                $line["image"],
-                $line["id"]
+            $released = null;
+            if (!empty($line["anime_released"])) {
+                $released = new \DateTime($line["anime_released"]);
+            }
+            $anime = new Anime(
+                $line["anime_name"],
+                $line["anime_genre"],
+                $released,
+                $line["anime_poster"],
+                $line["anime_id"]
             );
             //Il serait préférable d'appeler une méthode qui fait l'instance pour éviter les répétitions dans les find
             //$anime = $this->lineToAnime($line);
@@ -74,8 +77,8 @@ class AnimeRepository
             $anime = new anime(
                 $line["name"],
                 $line["genre"],
-                $line["release"],
-                $line["image"],
+                $line["released"],
+                $line["poster"],
                 $line["id"]
             );
 
@@ -97,12 +100,12 @@ class AnimeRepository
     {
         $connection = Database::connect();
         
-        $preparedQuery = $connection->prepare("INSERT INTO anime (name,genre,release,image) VALUES (:name,:genre,:release,:image)");
+        $preparedQuery = $connection->prepare("INSERT INTO anime (name,genre,released,poster) VALUES (:name,:genre,:released,:poster)");
         
         $preparedQuery->bindValue(":name", $anime->getName());
         $preparedQuery->bindValue(":genre", $anime->getGenre());
-        $preparedQuery->bindValue(":release", $anime->getRelease());
-        $preparedQuery->bindValue(":image", $anime->getImage());
+        $preparedQuery->bindValue(":released", $anime->getReleased());
+        $preparedQuery->bindValue(":poster", $anime->getPoster());
 
         
         $preparedQuery->execute();
@@ -139,11 +142,11 @@ class AnimeRepository
      */
     public function update(anime $anime): bool {
         $connection = Database::connect();
-        $preparedQuery = $connection->prepare("UPDATE anime SET name=:name, genre=:genre, release=:release WHERE id=:id");
+        $preparedQuery = $connection->prepare("UPDATE anime SET name=:name, genre=:genre, released=:released WHERE id=:id");
         $preparedQuery->bindValue(":name", $anime->getName());
         $preparedQuery->bindValue(":genre", $anime->getGenre());
-        $preparedQuery->bindValue(":release", $anime->getRelease());
-        $preparedQuery->bindValue(":image", $anime->getImage());
+        $preparedQuery->bindValue(":released", $anime->getReleased());
+        $preparedQuery->bindValue(":poster", $anime->getPoster());
 
         $preparedQuery->bindValue(":id", $anime->getId());
 
@@ -161,8 +164,8 @@ class AnimeRepository
         return  new anime(
                 $line["name"],
                 $line["genre"],
-                $line["release"],
-                $line["image"],
+                $line["released"],
+                $line["poster"],
                 $line["id"]
             );
     }

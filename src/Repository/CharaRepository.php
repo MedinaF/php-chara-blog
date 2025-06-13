@@ -21,47 +21,43 @@ class CharaRepository
         $connection = Database::connect();
 
         $preparedQuery = $connection->prepare("SELECT 
+            anime.id AS anime_id,
             anime.name AS anime_name,
             anime.genre AS anime_genre,
-            anime.released AS anime_released,      
-            anime.poster AS anime_poster,          
-            anime.id AS anime_id,  
-            chara.id AS chara_id,  
+            anime.released AS anime_released,
+            anime.poster AS anime_poster,
+            chara.id AS chara_id,
             chara.firstname AS chara_firstname,
             chara.lastname AS chara_lastname,
             chara.age AS chara_age,
-            chara.content AS chara_content,
-            chara.date AS chara_date,
-            chara.author AS chara_author,
-            chara.likes AS chara_likes,
             chara.picture AS chara_picture
-            FROM chara 
+            FROM chara
             JOIN anime ON anime.id = chara.animeID"
         );
         $preparedQuery->execute();
 
-        //foreach($preparedQuery->fetchAll() as $line) {
         while ($line = $preparedQuery->fetch()) {
+            $released = null;
+            if (!empty($line["anime_released"])) {
+                $released = new \DateTime($line["anime_released"]);
+            }
             $anime = new Anime(
-                $line["name"],
-                $line["genre"],
-                $line["released"],
-                $line["poster"],
-                $line["id"]
+                $line["anime_name"],
+                $line["anime_genre"],
+                $released,
+                $line["anime_poster"],
+                $line["anime_id"]
             );
             $chara = new Chara(
-              $line["chara_firstname"],
-                $line["chara_lastname"],
-                $line["chara_age"],
-                $line["chara_picture"],
-                $anime,
-                $line["chara_id"]
-            );
-            $list[]=$chara;
+            $line["chara_firstname"],
+            $line["chara_lastname"],
+            $line["chara_age"],
+            $anime,
+            $line["chara_picture"],
+            $line["chara_id"]
+        );
+            $list[] = $chara;
 
-            //Il serait préférable d'appeler une méthode qui fait l'instance pour éviter les répétitions dans les find
-            //$anime = $this->lineToanime($line);
-            $list[] = $anime;
         }
         return $list;
     }
@@ -80,7 +76,7 @@ class CharaRepository
         $preparedQuery->execute();
 
         while($line = $preparedQuery->fetch()) {
-            $list[] = $this->lineToanime($line);
+            $list[] = $this->lineToAnime($line);
         }
 
         return $list;
@@ -113,10 +109,14 @@ class CharaRepository
 
         $line = $preparedQuery->fetch();
         if ($line) {
+            $released = null;
+            if (!empty($line["anime_released"])) {
+                $released = new \DateTime($line["anime_released"]);
+            }
             $anime = new Anime(
                 $line["anime_name"],
                 $line["anime_genre"],
-                $line["anime_released"],
+                $released,
                 $line["anime_poster"],
                 $line["anime_id"]
             );
@@ -124,8 +124,8 @@ class CharaRepository
                 $line["chara_firstname"],
                 $line["chara_lastname"],
                 $line["chara_age"],
-                $line["chara_picture"],
                 $anime,
+                $line["chara_picture"],
                 $line["chara_id"]
             );
             return $chara;
@@ -207,10 +207,10 @@ class CharaRepository
      */
     private function lineToAnime(array $line):anime {
         return  new anime(
-                $line["firstname"],
-                $line["lastname"],
-                $line["age"],
-                $line["picture"],
+                $line["name"],
+                $line["genre"],
+                $line["released"],
+                $line["poster"],
                 $line["id"]
             );
 }

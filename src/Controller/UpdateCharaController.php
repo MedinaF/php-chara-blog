@@ -35,7 +35,7 @@ class UpdateCharaController extends BaseController {
         if (!$anime) {
             return new FormCharaView(error: "Anime not found", chara: $repo->findById($_GET["id"]));
         }
-        $chara = new Chara($_POST["firstname"], $_POST["lastname"], $_POST["age"], $_POST["picture"] ?? null, $anime, $_GET["id"]);
+        $chara = new Chara($_POST["firstname"], $_POST["lastname"], $_POST["age"],$anime, $_POST["picture"] ?? null,  $_GET["id"]);
         $repo->update($chara);
         return new RedirectView("/chara?id=".$chara->getId());
     }

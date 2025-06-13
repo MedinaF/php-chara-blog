@@ -105,7 +105,8 @@ class CommentRepository {
     }
     public function persist(Comment $comment) {
         $connection = Database::connect();
-        $preparedQuery = $connection->prepare("INSERT INTO comment (content, date, likes, author, charaID) VALUES (:content, :date, :likes, :author, :charaID)");
+        $preparedQuery = $connection->prepare("INSERT INTO comment (content, date, likes, author, charaID) 
+        VALUES (:content, :date, :likes, :author, :charaID)");
 
         $preparedQuery->bindValue(":content", $comment->getContent());
         $preparedQuery->bindValue(":date", $comment->getDate());
@@ -129,7 +130,8 @@ class CommentRepository {
 
     public function update(Comment $comment) {
         $connection = Database::connect();
-        $preparedQuery= $connection->prepare("UPDATE comment SET author=:author, content=:content, date=:date, likes=:likes, charaID=:charaID");
+        $preparedQuery= $connection->prepare("UPDATE comment 
+        SET author=:author, content=:content, date=:date, likes=:likes, charaID=:charaID");
 
         $preparedQuery->bindValue(":author", $comment->getAuthor());
         $preparedQuery->bindValue(":content", $comment->getContent());

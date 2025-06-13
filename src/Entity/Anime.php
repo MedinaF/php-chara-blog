@@ -2,27 +2,30 @@
 
 
 namespace App\Entity;
+use DateTime;
 
 class Anime {
     private ?int $id;
     private string $name;
     private string $genre;
-    private int $release;
-    private ?string $image;
+    private ?DateTime $released;
+    private ?string $poster;
 
     public function __construct(
         string $name,
         string $genre, 
-        int $release, 
-        ?string $image=null, 
+        ?DateTime $released=null, 
+        ?string $poster=null, 
         ?int $id =null
     ) {
         $this->name = $name;
         $this->genre = $genre;
-        $this->release = $release;
-        $this->image = $image;       
+        $this->released = $released;
+        $this->poster = $poster;       
         $this->id = $id;
     }
+    
+
 
     /**
      * Get the value of id
@@ -79,37 +82,37 @@ class Anime {
     }
 
     /**
-     * Get the value of release
+     * Get the value of released
      */
-    public function getRelease(): int
+    public function getReleased(): ?DateTime
     {
-        return $this->release;
+        return $this->released;
     }
 
     /**
-     * Set the value of release
+     * Set the value of released
      */
-    public function setRelease(int $release): self
+    public function setReleased(?DateTime $released): self
     {
-        $this->release = $release;
+        $this->released = $released;
 
         return $this;
     }
 
     /**
-     * Get the value of image
+     * Get the value of poster
      */
-    public function getImage(): ?string
+    public function getposter(): ?string
     {
-        return $this->image;
+        return $this->poster;
     }
 
     /**
-     * Set the value of image
+     * Set the value of poster
      */
-    public function setImage(?string $image): self
+    public function setposter(?string $poster): self
     {
-        $this->image = $image;
+        $this->poster = $poster;
 
         return $this;
     }
