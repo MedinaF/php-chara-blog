@@ -36,22 +36,22 @@ CREATE TABLE comment (
 
 -- Insertion d'animes
 INSERT INTO anime (name, genre, released, poster) VALUES
-('One Piece', 'Aventure', '1999-10-20','public\img\one_piece.png'),
-('JoJo\'s Bizarre Adventure', 'Action', '2012-10-06', 'public\img\jojo.jpg'),
-('Sugar Sugar Rune', 'Magie', '2005-07-02', 'public\img\sugar_sugar_rune.jpg'),
-('JoJo\'s Bizarre Adventure', 'Action', '2012-10-06', 'public\img\jojo.jpg'),
-('Sugar Sugar Rune', 'Magie', '2005-07-02', 'public\img\sugar_sugar_rune.jpg'),
-('JoJo\'s Bizarre Adventure', 'Action', '2012-10-06', 'public\img\jojo.jpg'),
-('One Piece', 'Aventure', '1999-10-20', 'public\img\one_piece.png'),
-('Sugar Sugar Rune', 'Magie', '2005-07-02', 'public\img\sugar_sugar_rune.jpg');
+('One Piece', 'Aventure', '1999-10-20','public/img/one_piece.png'),
+('JoJo\'s Bizarre Adventure', 'Action', '2012-10-06', 'public/img/jojo.jpg'),
+('Sugar Sugar Rune', 'Magie', '2005-07-02', 'public/img/sugar_sugar_rune.jpg'),
+('JoJo\'s Bizarre Adventure', 'Action', '2012-10-06', 'public/img/jojo.jpg'),
+('Sugar Sugar Rune', 'Magie', '2005-07-02', 'public/img/sugar_sugar_rune.jpg'),
+('JoJo\'s Bizarre Adventure', 'Action', '2012-10-06', 'public/img/jojo.jpg'),
+('One Piece', 'Aventure', '1999-10-20', 'public/img/one_piece.png'),
+('Sugar Sugar Rune', 'Magie', '2005-07-02', 'public/img/sugar_sugar_rune.jpg');
 
 -- Insertion de personnages
 INSERT INTO chara (firstname, lastname, age, picture, animeID) VALUES
-('Zoro', 'Roronoa', 21, 'public\img\zoro.jpg', 1),
-('Dio', 'Brando', 119,'public\img\Dio.png', 2),
-('Chocolat', 'Meilleure', 13,'public\img\Chocolat.jpg', 3),
-('Luffy', 'Monkey D.', 19,'public\img\Luffy.jpg', 1),
-('Jonathan', 'Joestar', 20,'public\img\Joestar.jpg', 2);
+('Zoro', 'Roronoa', 21, 'public/img/zoro.jpg', 1),
+('Dio', 'Brando', 119,'public/img/Dio.png', 2),
+('Chocolat', 'Meilleure', 13,'public/img/Chocolat.jpg', 3),
+('Luffy', 'Monkey D.', 19,'public/img/Luffy.jpg', 1),
+('Jonathan', 'Joestar', 20,'public/img/Joestar.jpg', 2);
 
 -- Insertion de commentaires
 INSERT INTO comment (author, content, likes, charaID) VALUES

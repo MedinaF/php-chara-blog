@@ -5,7 +5,7 @@ namespace App\Entity;
 
 class Chara {
     private string $firstname;
-    private string $lastname;
+    private ?string $lastname;
     private int $age;
     private Anime $anime;
     private ?string $picture;
@@ -13,7 +13,7 @@ class Chara {
 
     public function __construct(
         string $firstname,
-        string $lastname, 
+        ?string  $lastname, 
         int $age, 
         Anime $anime,
         ?string $picture = null,
@@ -48,7 +48,7 @@ class Chara {
     /**
      * Get the value of lastname
      */
-    public function getLastname(): string
+    public function getLastname(): ?string 
     {
         return $this->lastname;
     }
@@ -56,7 +56,7 @@ class Chara {
     /**
      * Set the value of lastname
      */
-    public function setLastname(string $lastname): self
+    public function setLastname(?string  $lastname): self
     {
         $this->lastname = $lastname;
 
