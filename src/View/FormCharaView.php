@@ -9,9 +9,8 @@ use App\Entity\Chara;
 
 class FormCharaView extends BaseView {
 
-    public function __construct(private string $error = "", private ?chara $chara = null) {
+    public function __construct(private string $error = "", private ?Chara $chara = null) {
     }
-
     protected function content(): void {
         ?>
         <h1><?= $this->chara ? "Update":"Add" ?> Chara</h1>

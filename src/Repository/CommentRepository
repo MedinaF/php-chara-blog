@@ -17,6 +17,8 @@ class CommentRepository {
             chara.date AS chara_date,
             chara.author AS chara_author,
             chara.likes AS chara_likes,
+            chara.picture AS chara_picture,
+            anime.id AS anime_id,
             chara.id AS chara_id,  
             comment.author AS chara_author,
             comment.content AS comment_content,
@@ -27,11 +29,18 @@ class CommentRepository {
         $preparedQuery->execute();
 
         while ($line = $preparedQuery->fetch()) {
+            // On récupère l'anime si l'id est défini, sinon on le met à null
+            $anime = null;
+            if (isset($line["anime_id"])) {
+                $animeRepo = new AnimeRepository();
+                $anime = $animeRepo->findById($line["anime_id"]);
+            }
             $chara = new Chara(
-              $line["firstname"],
+                $line["firstname"],
                 $line["lastname"],
                 $line["age"],
                 $line["picture"],
+                $anime,
                 $line["id"]
             );
             $comment = new Comment(

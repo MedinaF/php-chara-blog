@@ -11,13 +11,13 @@ class Chara {
     private ?string $picture;
     private Anime $anime;
 
-    public function __construct(
+        public function __construct(
         string $firstname,
         string $lastname, 
         int $age, 
-        ?string $picture=null,
-         Anime $anime,
-        ?int $id =null
+        ?string $picture = null,
+        Anime $anime,
+        ?int $id = null
     ) {
         $this->firstname = $firstname;
         $this->lastname = $lastname;

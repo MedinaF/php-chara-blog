@@ -8,8 +8,8 @@ CREATE TABLE anime (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(90) NOT NULL,
     genre VARCHAR(50),
-    release DATE,
-    image VARCHAR(150)
+    released DATE,
+    poster VARCHAR(150)
 );
 
 -- Table des personnages
@@ -18,9 +18,9 @@ CREATE TABLE chara (
     firstname VARCHAR(70) NOT NULL,
     lastname VARCHAR(70),
     age INT,
-    picture VARCHAR(150)
-    anime_id INT NOT NULL,
-    FOREIGN KEY (anime_id) REFERENCES anime(id)
+    picture VARCHAR(150),
+    animeID INT NOT NULL,
+    FOREIGN KEY (animeID) REFERENCES anime(id)
 );
 
 -- Table des commentaires (corrigée selon tes instructions)
@@ -30,28 +30,33 @@ CREATE TABLE comment (
     content VARCHAR(300) NOT NULL,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     likes ENUM('like', 'dislike'),
-    chara_id INT NOT NULL,
-    FOREIGN KEY (chara_id) REFERENCES chara(id)
+    charaID INT NOT NULL,
+    FOREIGN KEY (charaID) REFERENCES chara(id)
 );
 
 -- Insertion d'animes
-INSERT INTO anime (name, genre, release) VALUES
-('One Piece', 'Aventure', '1999-10-20'),
-('JoJo''s Bizarre Adventure', 'Action', '2012-10-06'),
-('Sugar Sugar Rune', 'Magie', '2005-07-02');
+INSERT INTO anime (name, genre, released, poster) VALUES
+('One Piece', 'Aventure', '1999-10-20','public\img\one_piece.png'),
+('JoJo\'s Bizarre Adventure', 'Action', '2012-10-06', 'public\img\jojo.jpg'),
+('Sugar Sugar Rune', 'Magie', '2005-07-02', 'public\img\sugar_sugar_rune.jpg'),
+('JoJo\'s Bizarre Adventure', 'Action', '2012-10-06', 'public\img\jojo.jpg'),
+('Sugar Sugar Rune', 'Magie', '2005-07-02', 'public\img\sugar_sugar_rune.jpg'),
+('JoJo\'s Bizarre Adventure', 'Action', '2012-10-06', 'public\img\jojo.jpg'),
+('One Piece', 'Aventure', '1999-10-20', 'public\img\one_piece.png'),
+('Sugar Sugar Rune', 'Magie', '2005-07-02', 'public\img\sugar_sugar_rune.jpg');
 
 -- Insertion de personnages
-INSERT INTO chara (firstname, lastname, age, anime_id) VALUES
-('Zoro', 'Roronoa', 21, 1),
-('Dio', 'Brando', 119, 2),
-('Chocolat', 'Meilleure', 13, 3),
-('Luffy', 'Monkey D.', 19, 1),
-('Jonathan', 'Joestar', 20, 2);
+INSERT INTO chara (firstname, lastname, age, picture, animeID) VALUES
+('Zoro', 'Roronoa', 21, 'public\img\zoro.jpg', 1),
+('Dio', 'Brando', 119,'public\img\Dio.png', 2),
+('Chocolat', 'Meilleure', 13,'public\img\Chocolat.jpg', 3),
+('Luffy', 'Monkey D.', 19,'public\img\Luffy.jpg', 1),
+('Jonathan', 'Joestar', 20,'public\img\Joestar.jpg', 2);
 
 -- Insertion de commentaires
-INSERT INTO comment (author, content, likes, chara_id) VALUES
+INSERT INTO comment (author, content, likes, charaID) VALUES
 ('NamiFan', 'C\'est pas crédible que Zoro utilise autant de sabres !', 'dislike', 1),
-('StandUser42', 'Dio est un méchant iconique, j''adore.', 'like', 2),
+('StandUser42', 'Dio est un méchant iconique, j\'adore.', 'like', 2),
 ('SweetLover', 'Chocolat est adorable et forte !', 'like', 3),
 ('LuffyFan', 'Le roi des pirates en devenir !', 'like', 4),
 ('HistoryNerd', 'Jonathan a une morale incroyable mais c\'est tout.', 'dislike', 5),

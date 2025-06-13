@@ -5,9 +5,8 @@ namespace App\Repository;
 use App\Entity\Anime;
 
 
-class animeRepository
+class AnimeRepository
 {
-
 
     /**
      * Méthode permettant de récupérer tous les animes en base de données et de les

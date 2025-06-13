@@ -8,6 +8,8 @@ use App\Repository\CharaRepository;
 use App\View\ErrorView;
 use App\View\FormCharaView;
 use App\View\RedirectView;
+use App\Repository\AnimeRepository;
+
 
 class UpdateCharaController extends BaseController {
 
@@ -25,10 +27,15 @@ class UpdateCharaController extends BaseController {
 
     public function doPost(): \App\Core\BaseView {
         $repo = new CharaRepository();
-        if(empty($_POST["firstname"]) || empty($_POST["lastname"]) || empty($_POST["age"])) {
+        $animeRepo = new AnimeRepository();
+        if(empty($_POST["firstname"]) || empty($_POST["lastname"]) || empty($_POST["age"]) || empty($_GET["anime"])) {
             return new FormCharaView(error: "Name, lastname and age are required", chara: $repo->findById($_GET["id"]));
         }
-        $chara = new Chara($_POST["firstname"], $_POST["lastname"], $_POST["age"], $_GET["id"], $_GET["anime"]);
+        $anime = $animeRepo->findById($_GET["anime"]);
+        if (!$anime) {
+            return new FormCharaView(error: "Anime not found", chara: $repo->findById($_GET["id"]));
+        }
+        $chara = new Chara($_POST["firstname"], $_POST["lastname"], $_POST["age"], $_POST["picture"] ?? null, $anime, $_GET["id"]);
         $repo->update($chara);
         return new RedirectView("/chara?id=".$chara->getId());
     }
