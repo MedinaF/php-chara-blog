@@ -17,8 +17,8 @@ class SearchController extends BaseController {
         }
 
         $repo = new CharaRepository();
+        $result = $repo->search($keyword);
 
-        
-        return new HomeView();
+        return new HomeView($result);
     }
 }
