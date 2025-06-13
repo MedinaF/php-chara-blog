@@ -10,6 +10,8 @@ use App\Controller\AnimeController;
 use App\Controller\SearchController;
 use App\Controller\SingleCharaController;
 use App\Controller\UpdateCharaController;
+use App\Controller\UpdateAnimeController;
+use App\Controller\DeleteAnimeController;
 
 
 /**
@@ -33,7 +35,9 @@ class Routes
             "/add-chara" => new AddCharaController(),
             "/chara" => new SingleCharaController(),
             "/search" => new SearchController(),
-            "/update-chara" => new UpdateCharaController()
+            "/update-chara" => new UpdateCharaController(),
+            "/update-anime" => new UpdateAnimeController(),
+            "/delete-anime" => new DeleteAnimeController()
         ];
     }
 }

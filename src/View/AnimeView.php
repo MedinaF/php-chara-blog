@@ -10,7 +10,15 @@ class AnimeView extends BaseView {
     protected function content(): void {
         echo "<ul>";
         foreach ($this->animes as $anime) {
-            echo "<li>" . htmlspecialchars($anime->getName()) . " (" . htmlspecialchars($anime->getGenre()) . ") - " . ($anime->getReleased()?->format('Y-m-d') ?? '') . "</li>";
+        echo "<li>" . htmlspecialchars($anime->getName()) . " (" . htmlspecialchars($anime->getGenre()) . ") - " . ($anime->getReleased()?->format('Y-m-d') ?? '') .
+            // Bouton Update
+            ' <a href="/update-anime?id=' . $anime->getId() . '" class="btn-search">Update</a>' .
+            // Formulaire Delete
+            ' <form method="post" action="/delete-anime" style="display:inline;">
+                <input type="hidden" name="id" value="' . $anime->getId() . '">
+                <button class="btn-search" onclick="return confirm(\'Supprimer cet anime ?\')">Delete</button>
+            </form>' .
+            "</li>";
         }
         echo "</ul>";
         ?>
