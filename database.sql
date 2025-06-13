@@ -17,7 +17,7 @@ CREATE TABLE chara (
     id INT PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(70) NOT NULL,
     lastname VARCHAR(70),
-    age INT,
+    age INT CHECK (age >= 0),
     picture VARCHAR(150),
     animeID INT NOT NULL,
     FOREIGN KEY (animeID) REFERENCES anime(id)

@@ -15,19 +15,37 @@ class AddCharaController extends BaseController {
     }
 
 protected function doPost(): \App\Core\BaseView {
-    if(!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['age']) && !empty($_POST['picture']) && !empty($_POST["anime"])) {
-            $animeRepo = new AnimeRepository();
-            $anime = $animeRepo->findById($_POST["anime"]);
+    if(
+        !empty($_POST['firstname']) &&
+        !empty($_POST['lastname']) &&
+        !empty($_POST['age']) &&
+        !empty($_POST["anime"])
+    ) {
+        $animeRepo = new AnimeRepository();
+        $anime = $animeRepo->findById($_POST["anime"]);
         if (!$anime) {
             return new FormCharaView("Anime not found");
         }
         $repo = new CharaRepository();
-        $chara = new Chara($_POST['firstname'], $_POST['lastname'], $_POST['age'], $anime, $_POST['picture']);
+
+        // Gestion du fichier image 
+        $picture = null;
+        if (!empty($_FILES['picture']['name'])) {
+            
+            $picture = $_FILES['picture']['name'];
+        }
+
+        $chara = new Chara(
+            $_POST['firstname'],
+            $_POST['lastname'],
+            $_POST['age'],
+            $anime,
+            $picture
+        );
 
         $repo->persist($chara);
         return new RedirectView("/chara?id=".$chara->getId());
     }
-    
     return new FormCharaView("firstname, lastname and age are required");
-}
+    }
 }

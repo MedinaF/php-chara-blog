@@ -25,7 +25,7 @@ class FormCharaView extends BaseView {
                 <input type="text" name="lastname" value="<?= $this->chara?->getLastname() ?>">
             </label>
             <label>age
-                <input type="number" name="age" value="<?= $this->chara?->getAge() ?>">
+                <input type="number" name="age" min="0" value="<?= $this->chara?->getAge() ?>">
             </label>
             <label>picture
                 <input type="file" name="picture" accept="image/*">

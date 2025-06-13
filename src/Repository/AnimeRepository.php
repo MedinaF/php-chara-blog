@@ -23,15 +23,15 @@ class AnimeRepository
 
         while ($line = $preparedQuery->fetch()) {
             $released = null;
-            if (!empty($line["anime_released"])) {
-                $released = new \DateTime($line["anime_released"]);
+            if (!empty($line["released"])) {
+                $released = new \DateTime($line["released"]);
             }
             $anime = new Anime(
-                $line["anime_name"],
-                $line["anime_genre"],
+                $line["name"],
+                $line["genre"],
                 $released,
-                $line["anime_poster"],
-                $line["anime_id"]
+                $line["poster"],
+                $line["id"]
             );
             //Il serait préférable d'appeler une méthode qui fait l'instance pour éviter les répétitions dans les find
             //$anime = $this->lineToAnime($line);
@@ -61,9 +61,9 @@ class AnimeRepository
     }
 
     /**
-     * Méthode qui va récupérer un chien par son id dans la base de données
-     * @param int $id l'id du chien à récupérer
-     * @return anime|null Renvoie soit une instance de anime ou null si aucun chien ne correspond à l'id donné
+     * Méthode qui va récupérer un anime par son id dans la base de données
+     * @param int $id l'id du anime à récupérer
+     * @return anime|null Renvoie soit une instance de anime ou null si aucun anime ne correspond à l'id donné
      */
     public function findById(int $id): ?anime {
         $connection = Database::connect();
@@ -74,10 +74,14 @@ class AnimeRepository
         
         $line = $preparedQuery->fetch();
         if ($line) {
-            $anime = new anime(
+            $released = null;
+            if (!empty($line["released"])) {
+                $released = new \DateTime($line["released"]);
+            }
+            $anime = new Anime(
                 $line["name"],
                 $line["genre"],
-                $line["released"],
+                $released,
                 $line["poster"],
                 $line["id"]
             );
@@ -90,11 +94,11 @@ class AnimeRepository
     }
 
     /**
-     * Méthode qui va attendre un objet chien en argument en entrée et qui l'utilisera
-     * pour peupler une requête INSERT INTO et faire persister ce chien dans la base de 
+     * Méthode qui va attendre un objet anime en argument en entrée et qui l'utilisera
+     * pour peupler une requête INSERT INTO et faire persister ce anime dans la base de 
      * données.
-     * @param \App\Entity\anime $anime Le chien à faire persister. Une fois le persist fait,
-     * le chien possédera un id autoincrémenté  par MySQL
+     * @param \App\Entity\anime $anime Le anime à faire persister. Une fois le persist fait,
+     * le anime possédera un id autoincrémenté  par MySQL
      */
     public function persist(anime $anime): void
     {
@@ -104,24 +108,23 @@ class AnimeRepository
         
         $preparedQuery->bindValue(":name", $anime->getName());
         $preparedQuery->bindValue(":genre", $anime->getGenre());
-        $preparedQuery->bindValue(":released", $anime->getReleased());
+        $preparedQuery->bindValue(":released",$anime->getReleased() ? $anime->getReleased()->format('Y-m-d') : null
+        );
         $preparedQuery->bindValue(":poster", $anime->getPoster());
 
-        
         $preparedQuery->execute();
 
-        //On récupère l'id auto incrémenté par mysql et on l'assigne à notre chien
         $anime->setId($connection->lastInsertId());
         
 
     }
 
     /**
-     * Méthode pour supprimer un chien persisté en base de données en se basant sur
+     * Méthode pour supprimer un anime persisté en base de données en se basant sur
      * son id.
-     * @param int $id l'id du chien à supprimer
-     * @return bool Renvoie true si un chien a bien été supprimé, sinon renvoie false 
-     * (dans le cas où aucun chien ne correspond à l'id)
+     * @param int $id l'id du anime à supprimer
+     * @return bool Renvoie true si un anime a bien été supprimé, sinon renvoie false 
+     * (dans le cas où aucun anime ne correspond à l'id)
      */
     public function delete(int $id): bool {
         $connection = Database::connect();
@@ -135,17 +138,17 @@ class AnimeRepository
     }
 
     /**
-     * Méthode pour mettre à jour un chien en base de données
-     * @param \App\Entity\anime $anime une instance de chien avec un id et des valeurs,
+     * Méthode pour mettre à jour un anime en base de données
+     * @param \App\Entity\anime $anime une instance de anime avec un id et des valeurs,
      * de préférence différentes de celles stockées en bdd
-     * @return bool True si un chien a bien été mis à jour, false si non (en gros si on a donné un id qui n'existe pas ou des valeurs similaires à celles en bdd)
+     * @return bool True si un anime a bien été mis à jour, false si non (en gros si on a donné un id qui n'existe pas ou des valeurs similaires à celles en bdd)
      */
     public function update(anime $anime): bool {
         $connection = Database::connect();
-        $preparedQuery = $connection->prepare("UPDATE anime SET name=:name, genre=:genre, released=:released WHERE id=:id");
+        $preparedQuery = $connection->prepare("UPDATE anime SET name=:name, genre=:genre, released=:released, poster=:poster WHERE id=:id");
         $preparedQuery->bindValue(":name", $anime->getName());
         $preparedQuery->bindValue(":genre", $anime->getGenre());
-        $preparedQuery->bindValue(":released", $anime->getReleased());
+        $preparedQuery->bindValue(":released",$anime->getReleased() ? $anime->getReleased()->format('Y-m-d') : null);        
         $preparedQuery->bindValue(":poster", $anime->getPoster());
 
         $preparedQuery->bindValue(":id", $anime->getId());
@@ -156,17 +159,22 @@ class AnimeRepository
     }
 
     /**
-     * Méthode qui transforme une ligne de résultat de la base de données en instance de chien
+     * Méthode qui transforme une ligne de résultat de la base de données en instance de anime
      * @param array $line La ligne de résultat sous forme de tableau associatif avec les noms de colonnes de la table
-     * @return anime L'instance de chien correspondant à la ligne de la base de données
+     * @return anime L'instance de anime correspondant à la ligne de la base de données
      */
-    private function lineToAnime(array $line):anime {
-        return  new anime(
-                $line["name"],
-                $line["genre"],
-                $line["released"],
-                $line["poster"],
-                $line["id"]
-            );
+    private function lineToAnime(array $line): Anime {
+        $released = null;
+        if (!empty($line["released"])) {
+            $released = new \DateTime($line["released"]);
+        }
+        return new Anime(
+            $line["name"],
+            $line["genre"],
+            $released,
+            $line["poster"],
+            $line["id"]
+        );
     }
+
 }

@@ -2,7 +2,7 @@
 
 
 namespace App\Entity;
-use DateTime;
+use DateTime; 
 
 class Anime {
     private ?int $id;
@@ -102,7 +102,7 @@ class Anime {
     /**
      * Get the value of poster
      */
-    public function getposter(): ?string
+    public function getPoster(): ?string
     {
         return $this->poster;
     }
@@ -110,7 +110,7 @@ class Anime {
     /**
      * Set the value of poster
      */
-    public function setposter(?string $poster): self
+    public function setPoster(?string $poster): self
     {
         $this->poster = $poster;
 

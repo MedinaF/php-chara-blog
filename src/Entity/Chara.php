@@ -19,6 +19,9 @@ class Chara {
         ?string $picture = null,
         ?int $id = null
     ) {
+        if ($age < 0) {
+        throw new \InvalidArgumentException("L'âge doit être supérieur ou égal à zéro.");
+        }
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->age = $age;
